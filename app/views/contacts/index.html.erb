@@ -44,4 +44,7 @@
 </div>
 <br>
 
-<%= button_to 'New', new_contact_path, method: :get, class: "btn btn-md btn-primary"  %>
+<div class="container">
+  <%= link_to 'New', new_contact_path, method: :get, class: "btn btn-md btn-primary" %>
+  <%= link_to 'Delete All', "#", method: :delete, class: "btn btn-md btn-danger", data: { confirm: 'You are about to delete ALL contact records. Are you sure you want to do this?'  } %>
+</div>
