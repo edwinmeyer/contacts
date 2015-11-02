@@ -33,6 +33,11 @@
   color: #555555;
 }
 
+.navbar-nav > li > a, .navbar-brand {
+  padding-top:3px !important; padding-bottom:3px !important;
+  height: 25px;
+}
+.navbar {min-height:25px !important;}
 
 .col-id {
   width: 3%;
@@ -44,3 +49,13 @@
 .col-wide {
   width: 20%;
 }
+
+hr {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-width: 1px 0px 0px;
+  border-style: solid none none;
+  border-color: #0F0F0F;
+}
+
+.form-inline {padding-top:4px;}

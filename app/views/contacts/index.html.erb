@@ -1,18 +1,25 @@
-<p id="notice"><%= notice %></p>
-
 <h3>Contacts</h3>
+<hr>
+
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <label for="filter">NON-FUNCTIONAL Filter By Name:</label>
+    <input type="filter" class="form-control" id="filter">
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
 
 <div class="container">
 
 <table  class="table table-striped">
   <thead>
     <tr>
-      <th class="col-id">Id</th>
+      <th class="col-id">ID</th>
       <th class="col-medium">First name</th>
       <th class="col-medium">Last name</th>
       <th class="col-medium">Phone</th>
       <th>Email</th>
-      <th class="col-wide">Created</th>
+      <th class="col-wide">Created At</th>
       <th class="col-medium">Actions</th>
      </tr>
   </thead>
@@ -37,4 +44,4 @@
 </div>
 <br>
 
-<%= link_to 'New Contact', new_contact_path %>
+<%= button_to 'New', new_contact_path, class: "btn btn-md btn-primary"  %>
