@@ -2,12 +2,6 @@
 <hr>
 
 <form class="form-inline" role="form">
-  <div class="form-group">
-    <label for="filter">NON-FUNCTIONAL Filter By Name:</label>
-    <input type="filter" class="form-control" id="filter">
-  </div>
-  <button type="submit" class="btn btn-primary">Search</button>
-</form>
 
 <div class="container">
 
@@ -20,7 +14,7 @@
       <th class="col-medium">Phone</th>
       <th>Email</th>
       <th class="col-wide">Created At</th>
-      <th class="col-medium">Actions</th>
+      <th class="col-wide">Actions</th>
      </tr>
   </thead>
 
@@ -34,6 +28,7 @@
         <td><%= contact.email %></td>
         <td><%= contact.created_at %></td>
         <td class="container">
+          <%= link_to 'Show', contact_path(contact), method: :get, class: "btn btn-xs btn-default" %>
           <%= link_to 'Edit', edit_contact_path(contact), method: :get, class: "btn btn-xs btn-default" %>
           <%= link_to 'Delete', contact, method: :delete, class: "btn btn-xs btn-danger", data: { confirm: 'Are you sure you want to destroy this contact record?' } %>
         </td>
