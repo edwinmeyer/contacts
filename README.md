@@ -1,4 +1,4 @@
-# Contacts -- A Ruby and Rails 4 Sample App 
+# Contacts -- A Ruby and Rails 5 Sample App 
 ## with RVM, Postgres, Git, Github, Heroku, Twitter Bootstrap, RSpec, and RubyMine
 ## Setup Notes
 #### *Edwin W. Meyer*
@@ -6,7 +6,7 @@
 ## Introduction
 *Contacts* is a Ruby on Rails sample application that maintains a simple contact list.  First & last names, phone, and email are stored for each contact.
 
-These notes cover environment setup for this Ruby on Rails 4 app on Ubuntu 14.04 using RVM, Postgres, Git, Github, and RSpec, with deployment to Heroku. Installation of the RubyMine IDE is also covered. Additionally, the app view is implemented using some features of Twitter Bootstrap.
+These notes cover environment setup for this Ruby on Rails 5 app on Ubuntu 16.04 using RVM, Postgres, Git, Github, and RSpec, with deployment to Heroku. Installation of the RubyMine IDE is also covered. Additionally, the app view is implemented using some features of Twitter Bootstrap.
 
 ## Setup Notes
 
@@ -14,8 +14,10 @@ These notes cover environment setup for this Ruby on Rails 4 app on Ubuntu 14.04
 - Note: the '$' character in the below command lines represents the terminal window command prompt.
 ```bash
 $ sudo apt-get update # update list of available packages -- advisable for _all_ apt installations
+$ gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3  # get public key for rvm
 $ sudo apt-get install curl # required to install RVM
 $ \curl -L https://get.rvm.io | bash -s stable # install RVM
+$ source /home/edwin/.rvm/scripts/rvm # Adds rvm to ~/.bashrc
 ```
 If RVM was previously installed, update it:
 ```bash
@@ -27,14 +29,15 @@ Install the latest Ruby version into RVM. Install bundler into "global" gemset (
 
 Per http://railsapps.github.io/installrubyonrails-ubuntu.html :
 ```bash
-$ rvm install ruby-2.3.0 # the latest ruby version released 12/25/2015.
-$ rvm alias create default 2.3.0 # creates "default" as an alias for ruby-2.3.0
-$ rvm use default --> Using /home/edwin/.rvm/gems/ruby-2.3.0 # See below if "RVM is not a function" is returned
-$ gem -v --> 2.5.1 # now the 'gem' command is also available
-# per https://gorails.com/setup/ubuntu/14.04 :
+$ rvm install ruby-2.4.0 # the latest ruby version released 12/25/2016.
+$ rvm alias create default 2.4.0 # creates "default" as an alias for ruby-2.4.0
+$ rvm use default --> Using /home/edwin/.rvm/gems/ruby-2.4.0 # See below if "RVM is not a function" is returned
+$ gem -v --> 2.6.8 # now the 'gem' command is also available
+
+# per https://gorails.com/setup/ubuntu/16.04 :
 $ echo "gem: --no-ri --no-rdoc" > ~/.gemrc # Create .gemrc specifying no gem doc file installation -- Instead lookup info on the web
 $ rvm gemset use global
-$ gem install bundler # into 'global' gemset for ruby-2.3.0 
+$ gem install bundler # Successfully installed bundler-1.14.4 (into 'global' gemset for ruby-2.4.0)
 ```
 or
 ```bash
@@ -43,14 +46,18 @@ $ rvm @global do gem install bundler
 
 ### Integrate RVM with Gnome-Terminal 
 If you use the Gnome terminal window, the following may be necessary.
-- In Terminal command bar | Edit | Profile Preferences | Title and Command :
-- ensure that "Run command as login shell" is clicked.
+- In Terminal command bar | Edit | Profile Preferences :
+  o click the Title tab & enter 'Profile name' as 'Rails' (or whatever you choose)
+  o click the Command tab & check 'Run command as a login shell'
+  o click the Close button.
 - close terminal & reopen to project workspace directory (the directory in which 'contacts' project will be created.) 
 Otherwise `rvm use ...` returns "RVM is not a function"  
 
+
 ### Install Nokogiri
+Used by all Rails apps and takes time to install. So do it once in the global gemset.
 ```bash
-$ gem install nokogiri # used by all Rails apps and takes time to install. So do it once in the global gemset
+$ gem install nokogiri # Successfully installed nokogiri-1.7.0.1
 ```
 - Note: If you get "ERROR: Failed to build gem native extension", the following may fix it:
 (See http://stackoverflow.com/questions/23661011/installing-nokogiri-on-ubuntu-debian-linux)
@@ -67,17 +74,18 @@ $ sudo apt-get install nodejs
 
 ### Install Git
 ```bash
-$ sudo apt-get install git
+$ sudo apt-get install git # version 2.7.4 is installed
 ```
-- Note: The latest version (2.7.0 released 1/4/2016) can be installed from https://git-scm.com/downloads, but this is not usually necessary.
+- Note: The latest version can be installed from https://git-scm.com/downloads, but this is not usually necessary.
 
 ### Instal Postgres
 Per https://gorails.com/setup/ubuntu/14.04 & https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04
 ```bash
-$ sudo apt-get install postgresql postgresql-contrib # version 9.3.10 released 10/31/2015
+$ sudo apt-get install postgresql postgresql-contrib # version 9.5
 ```
 - Note 1: postgres now runs as a service started upon boot. 
-- Note 2: A 'postgres' role (user) has been created. To run client as postgres user: 
+- Note 2: A 'postgres' role (user) has been created. 
+# To test installation, run client as postgres user: 
 ```bash
 $ sudo -i -u postgres # start new shell as postgres user
 $ psql # start client as postgres user
@@ -95,8 +103,8 @@ $ cd contacts # further work done inside project directory
 ### RVM Setup for App / Install Rails
 Specify the Ruby version to be used and create a gemset for the project. Install Rails into that gemset.
 ```bash
-$ rvm use ruby-2.3.0@contacts --create --ruby-version # this also creates .ruby-version and .ruby-gemset files in app root
-$ gem install rails --version=4.2.5 # Install Rails latest version released 11/12/2015 into the "contacts" gemset
+$ rvm use ruby-2.4.0@contacts --create --ruby-version # this also creates .ruby-version and .ruby-gemset files in app root
+$ gem install rails --version=5.0.1 # Install Rails latest version released 12/21/2016 into the "contacts" gemset
 ```
 
 ### Create Rails App Structure that Uses Postgres
@@ -106,10 +114,13 @@ Perform "rails new" with these options:
 ```bash
 $ rails new . -d postgresql -T
 ```
-- Note: If "Can't find the libpq-fe.h header" is returned, perform:
+- Note 1: If "Can't find the libpq-fe.h header" is returned, perform:
 ```bash
 $ sudo apt-get install libpq-dev # per http://askubuntu.com/questions/286617/error-cant-find-the-libpq-fe-h-header
 ```
+
+- Note 2: per https://github.com/rails/rails/issues/27450:  
+The native extensions for json gem versions < 1.8.5 will not compile when Ruby 2.4.0 is used.
 
 ### Create Application Elements Using Rails Generate Commands
 This is a simple way of creating basic functional app with controllers, models & views from the command line.
@@ -130,8 +141,9 @@ host: localhost # Otherwise get : FATAL: Peer authentication failed for user "ra
 
 ```bash
 $ sudo -u postgres createuser -s rails_user 
-$ sudo -u postgres psql # Enter Postgres client
+$ sudo -i -u postgres psql # Enter Postgres client
 ```
+
 - Note: '#' represents the psql prompt below
 ```bash
 # \password rails_user # Set password & confirmation at prompt as 'rails_user_pwd'

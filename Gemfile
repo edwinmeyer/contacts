@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby "2.3.0" # Tell Heroku what Ruby version to use
+ruby "2.4.0" # Tell Heroku what Ruby version to use
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '5.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -52,7 +52,7 @@ end
 
 # RSpec & related gems
 group :development, :test do
-  gem "rspec-rails", "~> 3.1.0"
+  gem "rspec-rails", "~> 3.5.2"
   gem "factory_girl_rails", "~> 4.4.1"
 end
 
