@@ -30,6 +30,8 @@
         <td class="container">
           <%= link_to 'Show', contact_path(contact), method: :get, class: "btn btn-xs btn-default" %>
           <%= link_to 'Edit', edit_contact_path(contact), method: :get, class: "btn btn-xs btn-default" %>
+          <%# Note: The delete confirmation is presented twice on the first delete in a new
+              development session for unknown reasons %>
           <%= link_to 'Delete', contact, method: :delete, class: "btn btn-xs btn-danger", data: { confirm: 'Are you sure you want to destroy this contact record?' } %>
         </td>
       </tr>
@@ -43,3 +45,5 @@
   <%= link_to 'New', new_contact_path, method: :get, class: "btn btn-md btn-primary" %>
   <%= link_to 'Delete All', destroy_all_contacts_path, method: :delete, class: "btn btn-md btn-danger", data: { confirm: 'You are about to delete ALL contact records. Are you sure you want to do this?'  } %>
 </div>
+
+</form>
