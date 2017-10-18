@@ -2,5 +2,6 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @contact %> |
-<%= link_to 'Back', contacts_path %>
+<%= button_to 'Show', contact_path(@contact), method: :get, class: "btn btn-xs btn-default", form_class: "inline-button" %>
+<%= button_to 'Back', :back, method: :get, class: "btn btn-xs btn-default", form_class: "inline-button" %>
+

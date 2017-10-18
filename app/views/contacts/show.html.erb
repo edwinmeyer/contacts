@@ -18,5 +18,6 @@
   <%= @contact.email %>
 </p>
 
-<%= link_to 'Edit', edit_contact_path(@contact) %> |
-<%= link_to 'Back', contacts_path %>
+<%= button_to 'Edit', edit_contact_path(@contact), method: :get, class: "btn btn-xs btn-default", form_class: "inline-button" %>
+<%# This Back button should always return to the index page to avoid circular 'back's: %>
+<%= button_to 'Back', contacts_path, method: :get, class: "btn btn-xs btn-default", form_class: "inline-button" %>
